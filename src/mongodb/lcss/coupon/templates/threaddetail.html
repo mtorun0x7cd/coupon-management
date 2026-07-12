@@ -1,0 +1,137 @@
+{% extends "base.html" %} {% block content %}
+<div id="wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col s12">
+        <div class="card">
+          <div class="card-content">
+            <h4 class="card-title" style="font-size: 2.5rem; font-weight: 500">
+              {{ coupon.name }}
+            </h4>
+
+            <div class="row" style="margin-bottom: 0">
+              <div class="col s12">
+                <div class="divider" style="margin: 1rem 0"></div>
+              </div>
+              <div class="col s12 m6 l3">
+                <p style="font-size: 1.25rem">Discount:</p>
+                <p style="font-size: 2rem; font-weight: 500">
+                  {{ coupon.discount_amt|floatformat }}%
+                </p>
+              </div>
+              <div class="col s12 m6 l3">
+                <p style="font-size: 1.25rem">Expires:</p>
+                <p style="font-size: 2rem; font-weight: 500">
+                  {{ coupon.expiring_date|date:"F d, Y" }}
+                </p>
+              </div>
+              <div class="col s12 m6 l3">
+                <p style="font-size: 1.25rem">Code:</p>
+                <p style="font-size: 2rem; font-weight: 500">
+                  {{ coupon.code }}
+                </p>
+              </div>
+              <div class="col s12 m6 l3">
+                <p style="font-size: 1.25rem">Score:</p>
+                <p style="font-size: 2rem; font-weight: 500">
+                  {{ coupon.score }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="card-action">
+            <a
+              style="margin-left: 30px"
+              href="{% url 'home' %}"
+              class="btn login"
+              >Back to Home</a
+            >
+            <div class="right">
+              <div class="row" style="margin-bottom: 0">
+                <div class="col s12">
+                  {% for hashtag in coupon.hashtags.all %}
+                  <a href="{% url 'coupon_by_hashtag' hashtag.name %}">
+                    <span class="chip">{{ hashtag.name }}</span>
+                  </a>
+                  {% empty %}
+                  <p>No hashtags yet.</p>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <div class="card">
+            <div class="card-content">
+              <h4
+                class="card-title"
+                style="font-size: 2.5rem; font-weight: 500"
+              >
+                Add a Comment
+              </h4>
+              <form method="post" action="{% url 'add_comment' coupon.id %}">
+                {% csrf_token %} {{ form.as_p }}
+                <button
+                  style="margin-left: 15px; margin-top: 15px"
+                  class="btn login"
+                  type="submit"
+                  name="action"
+                >
+                  Submit<i class="material-icons right">send</i>
+                </button>
+              </form>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <div class="card">
+                <div class="card-content">
+                  <h4
+                    class="card-title"
+                    style="
+                      font-size: 2.5rem;
+                      font-weight: 500;
+                      margin-bottom: 10px;
+                    "
+                  >
+                    Comments
+                  </h4>
+                  {% for comment in comments|slice:":5" %}
+                  <div class="card">
+                    <div class="card-content">
+                      <p>{{ comment.text }}</p>
+                      <p>
+                        Posted by: {{ comment.user.username }} | Posted on:
+                        {{comment.created_date}}
+                      </p>
+                    </div>
+                  </div>
+                  {% empty %}
+                  <p>No comments yet.</p>
+                  {% endfor %} {% if comments.count > 5 %}
+                  <a
+                    style="margin-left: 25px; margin-top: 15px"
+                    href="{% url 'all_comments' coupon.id %}"
+                    class="btn login"
+                  >
+                    View all comments
+                  </a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {% endblock content %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

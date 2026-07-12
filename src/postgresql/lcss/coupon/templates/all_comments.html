@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block content %}
+<div class="row">
+  <div class="col s12">
+    <h4>Comments</h4>
+    {% for comment in comments %}
+    <div class="card">
+      <div class="card-content">
+        <p>{{ comment.text }}</p>
+        <p>
+          Posted by: {{ comment.user.username }} | Posted on:
+          {{comment.created_date}}
+        </p>
+      </div>
+    </div>
+    {% empty %}
+    <p>No comments yet.</p>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock content %}

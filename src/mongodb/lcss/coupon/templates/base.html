@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{%load static%}
+<html>
+<head>
+  <title>Coupon LCSS</title>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+  <div class="navbar">
+    <nav>
+      <div class="nav-wrapper navcolor">
+        <a href="/" class="brand-logo navheader">Coupon App</a>
+        <ul class="right hide-on-med-and-down">
+
+          <li>
+            <div class="search">
+              <form method="GET" action="{% url 'search_coupons' %}">
+                <div class="input-field">
+                  
+                    {% csrf_token %}
+                      <i class="material-icons prefix search-icon">search</i>
+                      {{ coupon_search_form.search_query }}
+                  </div>
+                </form>
+             </div>
+          </li>
+           {% if user.is_authenticated %}
+          <li><a class="login" href="{% url 'profile' %}"><i class="material-icons left">person</i>Profile
+          </a></li>
+          {% else %}
+          <li><a class="login" href="{% url 'login' %}"><i class="material-icons left">person</i>Login
+          </a></li>
+          {% endif %}
+          <li>
+            <a class="create-thread" href="{% url 'create-thread' %}">
+              <i class="material-icons left">add</i>Create Coupon
+            </a>
+          </li>
+        </ul>
+
+
+    </nav>
+  </div>
+  <div class="container">
+    <div class="section">{% block content %} {% endblock %}</div>
+  </div>
+</body>
+
+</html>
+

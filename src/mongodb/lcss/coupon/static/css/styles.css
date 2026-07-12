@@ -1,0 +1,183 @@
+.btncolor {
+  background-color: #1a639c !important;
+  border-radius: 20px;
+}
+
+.navheader {
+  margin-left: 30px;
+}
+.search-icon {
+  color: darkgrey;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-20%);
+  left: 16px;
+}
+
+.inputtext {
+  color: black;
+  padding-left: 48px;
+  transform: translateY(-15%);
+}
+
+.input-field {
+  background-color: white;
+  border: 2px solid #eee;
+  width: 150%;
+  right: 150px;
+  margin-bottom: 50px;
+  border-radius: 50px;
+  position: relative;
+  border: none;
+}
+
+.search {
+  height: 50px;
+  margin-top: 6px;
+  position: relative;
+}
+
+.input-field input[type="text"] {
+  width: 80%; /* Adjust the width as desired */
+}
+
+.input-field input[type="text"]:focus:not([readonly]) {
+  border-bottom: none !important; /* Remove the bottom border on focus */
+  box-shadow: none !important; /* Remove the box shadow on focus */
+}
+
+.create-thread {
+  background-color: #69be28 !important;
+  border-radius: 100px;
+}
+.btn-style {
+  background-color: #1a639c !important;
+  border-radius: 50px;
+  transform: translateX(-15%);
+}
+.login {
+  background-color: #1a639c !important;
+  border-radius: 50px;
+  transform: translateX(-15%);
+}
+.coupon-actions {
+  display: flex;
+  align-items: center;
+}
+
+.coupon-form {
+  margin-right: 10px;
+}
+
+.scores-container {
+  margin: 0 10px;
+}
+
+.scoresbutton {
+  border: none;
+  background-color: transparent;
+}
+
+.navcolor {
+  background-color: #125293 !important;
+}
+
+button {
+  background-color: transparent !important;
+  border: none !important;
+}
+.coupon-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.coupon-actions-container {
+  display: flex;
+  align-items: center;
+  margin-left: 50px;
+  align-items: center;
+  border-radius: 50px;
+  border: 1px solid #ccc;
+  margin-top: 0px;
+  margin-right: -12px;
+}
+
+.coupon-actions {
+  display: flex;
+  align-items: center;
+}
+
+.coupon-action-btn {
+  border: none;
+  background-color: transparent;
+  margin: 0 10px;
+  padding: 0;
+}
+
+.scores-container {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.card {
+  margin-bottom: 1rem;
+}
+
+.coupon-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.coupon-expiration {
+  margin-left: auto;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid #ccc;
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.coupon-code {
+  margin-left: 10px;
+}
+
+.coupon-code-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+}
+.coupon-code-btn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.discount-container {
+  margin-left: 80px;
+}
+
+.coupon-comments {
+  border: none;
+  background-color: transparent;
+  color: grey;
+  margin-left: 100px;
+}
+
+.coupon-comments-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 100px;
+
+  padding: 5px;
+}
+
+.comment-icon-btn {
+  border: none;
+  background-color: transparent;
+}

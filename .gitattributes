@@ -1,0 +1,24 @@
+# Normalize line endings for all text files
+* text=auto eol=lf
+
+# Python sources -- enforce LF
+*.py  text eol=lf
+
+# Web & markup -- enforce LF
+*.html  text eol=lf
+*.css   text eol=lf
+*.md    text eol=lf
+*.svg   text eol=lf
+
+# Diagrams & configuration -- enforce LF
+*.puml  text eol=lf
+*.yml   text eol=lf
+*.cff   text eol=lf
+
+# Editor/Git configs
+.editorconfig   text eol=lf
+.gitignore      text eol=lf
+.gitattributes  text eol=lf
+
+# Binary assets
+*.png   binary

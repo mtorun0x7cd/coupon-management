@@ -1,0 +1,37 @@
+@startuml "use_case"
+left to right direction
+
+actor "User" as actor
+
+rectangle CouponApp {
+  usecase "Create account" as createAccount
+  usecase "Login to account" as loginAccount
+
+  usecase "View list of existing coupons" as viewCoupons
+  usecase "View existing coupon" as viewCoupon
+
+  usecase "Create coupon" as createCoupon
+  usecase "Vote for coupon" as voteCoupon
+  usecase "Comment on coupon" as commentCoupon
+
+  usecase "Search for hashtags" as searchHashtags
+
+  usecase "Navigate back to homepage" as navigateBack
+}
+
+actor -- createAccount
+actor -- loginAccount
+actor -- viewCoupons
+actor -- viewCoupon
+actor -- createCoupon
+actor -- voteCoupon
+actor -- commentCoupon
+actor -- searchHashtags
+actor -- navigateBack
+
+navigateBack ..> viewCoupon : <<extend>>
+createCoupon ..> viewCoupons : <<include>
+viewCoupon ..> viewCoupons : <<include>>
+voteCoupon ..> viewCoupon : <<extend>>
+commentCoupon ..> viewCoupon : <<extend>>
+@enduml

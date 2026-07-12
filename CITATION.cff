@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+title: Coupon Management Platform
+message: If you use this software, please cite it using the metadata below.
+type: software
+abstract: >-
+  A Django web application implemented against two database backends —
+  PostgreSQL (relational) and MongoDB (document-oriented, via Djongo) — for
+  community-driven coupon sharing. The same application layer runs on both
+  engines to compare relational and document storage under identical workloads,
+  with Locust load-test scenarios and seed scripts for reproducible
+  benchmarking. Developed as a team project at TH Köln (Cologne University of
+  Applied Sciences).
+authors:
+  - given-names: Mert
+    family-names: Torun
+    email: info@mtorun0x7cd.com
+    affiliation: TH Köln
+version: 1.0.0
+date-released: 2023-08-31
+license: MIT
+repository-code: https://github.com/mtorun0x7cd/coupon-management
+url: https://github.com/mtorun0x7cd/coupon-management
+keywords:
+  - django
+  - polyglot-persistence
+  - postgresql
+  - mongodb
+  - djongo
+  - locust
+  - performance-benchmarking
+  - web-application
+  - academic-project

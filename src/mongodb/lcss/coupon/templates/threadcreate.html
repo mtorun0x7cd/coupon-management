@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block content %}
+<form action="" method="post">
+  {% csrf_token %}
+  <p>Name:</p>
+  {{ form.name }}
+  <p>Expiring date:</p>
+  {{ form.expiring_date }}
+  <p>Discount amount:</p>
+  {{ form.discount_amt}}
+  <div class="form-group">
+    <p for="id_hashtags">Hashtags (separated by commas):</p>
+    <input type="text" class="form-control" name="hashtags" id="id_hashtags" />
+  </div>
+  <button class="btn btncolor" type="submit">Create</button>
+  <button class="btn btncolor" type="reset">Reset</button>
+</form>
+{% endblock content %}

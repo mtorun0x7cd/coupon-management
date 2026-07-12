@@ -1,0 +1,47 @@
+# Security Policy
+
+## Status
+
+This repository is an archived academic project (TH Köln, Large and Cloud-based
+Software Systems, Summer 2023), retained for reference and portfolio purposes.
+It is **not under active development** and receives no functional or security
+updates.
+
+## Not for production use
+
+The application runs with Django's development configuration and was written as a
+student exercise for comparative database benchmarking, not as a hardened
+deployment. Both `settings.py` files ship with `DEBUG = True`, an empty
+`ALLOWED_HOSTS`, and a placeholder `SECRET_KEY` (`<your-secret-key>`); the
+database credentials are likewise placeholders (`<db-password>` and
+`mongodb+srv://<username>:<password>@<cluster-host>/`), not live secrets. It must
+not be deployed on an untrusted network or operated against real data.
+
+## Known Limitations
+
+The source carries the posture of a development-grade Django project. These notes
+are recorded for transparency, not as a maintenance backlog:
+
+- **Development settings.** `DEBUG = True` exposes stack traces and configuration
+  to any client on error, `ALLOWED_HOSTS` is empty, and `SECRET_KEY` falls back
+  to a committed placeholder when `DJANGO_SECRET_KEY` is unset. None of these are
+  suitable outside local development.
+- **Unauthenticated read views.** The hashtag listing and search views
+  (`coupon_by_hashtag`, `search_coupons`) are reachable without a session; the
+  remaining views are gated with Django's `@login_required`.
+- **No transport security or rate limiting.** The project provides no TLS,
+  throttling, or abuse protection; these are left to a deployment environment
+  that is absent here.
+- **Benchmark seed data.** The scripts under `scripts/` insert fixed test
+  accounts with a shared, publicly known password hash. They exist for load
+  testing only and must never be run against a real database.
+
+The application does inherit Django's built-in protections — the ORM
+parameterizes queries, CSRF middleware is enabled, and passwords are stored with
+Django's PBKDF2 hasher — but these do not substitute for the hardening a
+production deployment requires.
+
+## Reporting
+
+To report a substantive issue worth recording, contact <info@mtorun0x7cd.com>.
+Given the archived status of the project, a fix or response is not guaranteed.
