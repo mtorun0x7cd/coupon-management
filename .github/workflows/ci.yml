@@ -31,7 +31,7 @@ jobs:
         run: python -m compileall -q src scripts tests
 
       - name: Package application
-        run: zip -r coupon-management.zip src scripts tests assets requirements.txt LICENSE README.md
+        run: zip -r coupon-management.zip src scripts tests assets requirements.txt requirements-mongodb.txt LICENSE README.md
 
       - name: Upload build artifact
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
