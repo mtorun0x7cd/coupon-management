@@ -66,7 +66,7 @@ src/
     └── lcss/            # Project settings (Djongo engine)
 ```
 
-The model, view, form, and URL layers are identical across the two variants; they differ only in the `settings.py` database engine. This isolates storage-engine performance from application logic.
+The model, view, form, and URL layers are the same across the two variants; the substantive difference between them is the `settings.py` database engine. This isolates storage-engine performance from application logic.
 
 ```text
 ┌─────────────┐     ┌──────────────┐     ┌─────────────────┐
