@@ -32,9 +32,12 @@ are recorded for transparency, not as a maintenance backlog:
 - **No transport security or rate limiting.** The project provides no TLS,
   throttling, or abuse protection; these are left to a deployment environment
   that is absent here.
-- **Benchmark seed data.** The scripts under `scripts/` insert fixed test
-  accounts with a shared, publicly known password hash. They exist for load
-  testing only and must never be run against a real database.
+- **Benchmark seed data.** The seed scripts under `scripts/` create fixed test
+  accounts for load testing only and must never be run against a real database.
+  Their credential handling differs by backend: the PostgreSQL seed
+  (`postgres_create_users.py`) assigns every account the same publicly known
+  PBKDF2 hash, whereas the MongoDB seed (`mongo_create_users.py`) writes a
+  random plaintext string per account. Neither is a live secret.
 
 The application does inherit Django's built-in protections — the ORM
 parameterizes queries, CSRF middleware is enabled, and passwords are stored with
