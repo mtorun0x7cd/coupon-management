@@ -94,7 +94,7 @@ The domain model consists of three entities:
 Both backends use the same Django model layer, shown below. On PostgreSQL it maps to normalized tables with a `coupon_coupon_hashtags` junction table; on MongoDB, Djongo (`ENFORCE_SCHEMA = True`) maps the same models onto collections with reference fields and a junction collection. The two deployments therefore exercise the same logical schema on different storage engines — the variable under study.
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#eaf1ff', 'edgeColor': '#2563EB', 'primaryBorderColor': '#2563EB', 'lineColor': '#2563EB', 'textColor': '#0a2a66' }}}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#EFF6FF', 'edgeColor': '#2563EB', 'primaryBorderColor': '#2563EB', 'lineColor': '#2563EB', 'textColor': '#0F172A' }}}%%
 erDiagram
     auth_user ||--o{ Coupon : owns
     auth_user ||--o{ Comment : writes
