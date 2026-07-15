@@ -139,7 +139,7 @@ The seed scripts under `scripts/` populate each backend with a configurable numb
 | Category | Technologies |
 | --- | --- |
 | Language | Python 3 |
-| Framework | Django 4.2.1 |
+| Framework | Django 4.2.1 (PostgreSQL variant); Django 3.1.x via Djongo (MongoDB variant) |
 | SQL database | PostgreSQL (via `psycopg2`) |
 | NoSQL database | MongoDB Atlas (via Djongo) |
 | Load testing | Locust |
@@ -179,7 +179,7 @@ coupon-management/
 
 ### Prerequisites
 
-- Python 3.10+
+- Python 3.10+ for the PostgreSQL variant; the MongoDB/Djongo variant runs on the older stack pinned in `requirements-mongodb.txt`
 - PostgreSQL 14+ (for the SQL variant)
 - MongoDB 6+ or a MongoDB Atlas account (for the NoSQL variant)
 
@@ -194,14 +194,12 @@ cd coupon-management
 python3 -m venv venv
 source venv/bin/activate
 
-# Install dependencies
+# PostgreSQL backend (Django 4.2.1 + psycopg2 + Locust):
 pip install -r requirements.txt
 
-# For the PostgreSQL backend:
-pip install psycopg2-binary
-
-# For the MongoDB backend:
-pip install djongo pymongo
+# MongoDB backend — Djongo pins an older Django/pymongo,
+# so install it in a separate virtual environment:
+pip install -r requirements-mongodb.txt
 ```
 
 ### Configuration
