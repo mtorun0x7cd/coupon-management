@@ -1,6 +1,6 @@
 # PostgreSQL variant and the shared Locust load-testing tooling.
 # The MongoDB variant is driven by Djongo, which pins an older, incompatible
 # stack; its dependencies live in requirements-mongodb.txt.
-Django==4.2.1
+Django==4.2.30
 psycopg2-binary==2.9.9
 locust==2.45.0
