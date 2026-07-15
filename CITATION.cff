@@ -8,8 +8,8 @@ abstract: >-
   community-driven coupon sharing. The same application layer runs on both
   engines to compare relational and document storage under identical workloads,
   with Locust load-test scenarios and seed scripts for reproducible
-  benchmarking. Developed as a team project at TH Köln (Cologne University of
-  Applied Sciences).
+  benchmarking. Developed as a team project at TH Köln (University of Applied
+  Sciences).
 authors:
   - given-names: Mert
     family-names: Torun

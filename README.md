@@ -34,7 +34,7 @@ Load is generated with **Locust**, and seed scripts populate each backend with c
 
 | Dimension | Detail |
 | :--- | :--- |
-| **Institution** | TH Köln (Cologne University of Applied Sciences) |
+| **Institution** | TH Köln (University of Applied Sciences) |
 | **Program** | Computer Science & Engineering (Technische Informatik) |
 | **Course** | Large and Cloud-based Software Systems (LCSS) |
 | **Semester** | Summer 2023 |
