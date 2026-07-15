@@ -8,9 +8,10 @@ controlled run rather than estimating.
 
 Compare relational (PostgreSQL) and document (MongoDB) storage under identical
 application logic and workload. The Django model, view, form, and URL layers are
-byte-identical across `src/postgresql/` and `src/mongodb/`; only the `DATABASES`
-block in `lcss/settings.py` differs. The storage engine is therefore the sole
-independent variable.
+byte-identical across `src/postgresql/` and `src/mongodb/`; the substantive
+difference between the variants is the database engine configured in
+`lcss/settings.py`. Because that application layer is identical, the storage
+engine remains the sole independent variable and the comparison stays valid.
 
 ## Scenarios
 
