@@ -31,7 +31,14 @@ jobs:
         run: python -m compileall -q src scripts tests
 
       - name: Package application
-        run: zip -r coupon-management.zip src scripts tests assets requirements.txt requirements-mongodb.txt LICENSE README.md
+        run: |
+          # Reproducible archive: normalize mtimes to the commit date and emit
+          # entries in a stable order so repeated runs are byte-identical.
+          export TZ=UTC LC_ALL=C
+          SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
+          paths="src scripts tests assets requirements.txt requirements-mongodb.txt LICENSE README.md"
+          find $paths -exec touch --no-dereference --date="@$SOURCE_DATE_EPOCH" {} +
+          find $paths | sort | zip -X -@ coupon-management.zip
 
       - name: Upload build artifact
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
