@@ -168,7 +168,8 @@ coupon-management/
 │   ├── social_card.png                # Social sharing card
 │   ├── render.sh                      # SVG-to-PNG rendering script
 │   └── BENCHMARK.md                   # Benchmark protocol and results template
-├── requirements.txt                   # Python dependencies
+├── requirements.txt                   # Python dependencies — PostgreSQL variant and Locust
+├── requirements-mongodb.txt           # Python dependencies — MongoDB/Djongo variant
 ├── CITATION.cff
 ├── SECURITY.md
 ├── LICENSE
