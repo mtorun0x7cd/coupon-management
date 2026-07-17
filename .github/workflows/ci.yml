@@ -33,18 +33,21 @@ jobs:
       - name: Package application
         run: |
           # Reproducible archive: normalize mtimes to the commit date and emit
-          # entries in a stable order so repeated runs are byte-identical.
+          # entries in a stable order so repeated runs are byte-identical. The
+          # deliverable is staged under .tmp.nosync/ so no build state lands in
+          # the source tree.
           export TZ=UTC LC_ALL=C
           SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
           paths="src scripts tests assets requirements.txt requirements-mongodb.txt LICENSE README.md"
           find $paths -exec touch --no-dereference --date="@$SOURCE_DATE_EPOCH" {} +
-          find $paths | sort | zip -X -@ coupon-management.zip
+          mkdir -p .tmp.nosync/dist
+          find $paths | sort | zip -X -@ .tmp.nosync/dist/coupon-management.zip
 
       - name: Upload build artifact
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: coupon-management
-          path: coupon-management.zip
+          path: .tmp.nosync/dist/*
           if-no-files-found: error
 
   release:
