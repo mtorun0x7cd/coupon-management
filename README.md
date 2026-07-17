@@ -26,7 +26,7 @@
 
 This platform lets users create, share, and discover discount coupons within a community. Registered users post coupons with discount metadata, upvote or downvote submissions, comment on deals, and find coupons through a hashtag-based taxonomy and search.
 
-The technical focus is a **polyglot-persistence architecture**: the same Django application is run against two distinct database backends — PostgreSQL (relational, via `psycopg2`) and MongoDB (document-oriented, via Djongo). Both deployments share the same domain model, view, form, and URL layer, differing in the `settings.py` database configuration. This isolates storage-engine behaviour from application logic and makes the two engines directly comparable under identical workloads.
+The technical focus is a **comparative storage-engine study**: the same Django application is run against two distinct database backends — PostgreSQL (relational, via `psycopg2`) and MongoDB (document-oriented, via Djongo). Both deployments share the same domain model, view, form, and URL layer, differing in the `settings.py` database configuration. This isolates storage-engine behaviour from application logic and makes the two engines directly comparable under identical workloads.
 
 Load is generated with **Locust**, and seed scripts populate each backend with configurable volumes of test data, so the comparison runs against reproducible datasets. This is an archived academic team deliverable, retained for reference; it is not maintained and is not suitable for production use (see [Security](#security)).
 
@@ -265,15 +265,13 @@ locust -f tests/locust_postgres_performance.py
 
 [1] Django Software Foundation, "Django Documentation (v4.2)," 2023. [Online]. Available: <https://docs.djangoproject.com/en/4.2/>
 
-[2] M. Fowler, "Polyglot Persistence," *martinfowler.com*, 2011. [Online]. Available: <https://martinfowler.com/bliki/PolyglotPersistence.html>
+[2] Locust Contributors, "Locust — A Modern Load Testing Framework." [Online]. Available: <https://locust.io/>
 
-[3] Locust Contributors, "Locust — A Modern Load Testing Framework." [Online]. Available: <https://locust.io/>
+[3] The PostgreSQL Global Development Group, "PostgreSQL Documentation." [Online]. Available: <https://www.postgresql.org/docs/>
 
-[4] The PostgreSQL Global Development Group, "PostgreSQL Documentation." [Online]. Available: <https://www.postgresql.org/docs/>
+[4] MongoDB, Inc., "MongoDB Documentation." [Online]. Available: <https://www.mongodb.com/docs/>
 
-[5] MongoDB, Inc., "MongoDB Documentation." [Online]. Available: <https://www.mongodb.com/docs/>
-
-[6] Doableware, "Djongo — Django and MongoDB Connector." [Online]. Available: <https://www.djongomapper.com/>
+[5] Doableware, "Djongo — Django and MongoDB Connector." [Online]. Available: <https://www.djongomapper.com/>
 
 ## Citation
 

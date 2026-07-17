@@ -22,7 +22,7 @@ repository-code: https://github.com/mtorun0x7cd/coupon-management
 url: https://github.com/mtorun0x7cd/coupon-management
 keywords:
   - django
-  - polyglot-persistence
+  - database-benchmarking
   - postgresql
   - mongodb
   - djongo
