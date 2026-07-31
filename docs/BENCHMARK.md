@@ -16,9 +16,11 @@ engine remains the sole independent variable and the comparison stays valid.
 ## Scenarios
 
 1. **End-to-end HTTP** — [`tests/locustfile.py`](../tests/locustfile.py): an
-   `HttpUser` issuing `GET /search_coupons/?search_query=test` (wait 1–3 s).
-   Exercises the full request path (routing, ORM/Djongo, template render). Run
-   once per backend.
+   `HttpUser` issuing
+   `GET /search_coupons/?csrfmiddlewaretoken=<csrf-token>&search_query=test`
+   (wait 1–3 s). Exercises the full request path (routing, ORM/Djongo, template
+   render). Run once per backend. The CSRF parameter is inert on a GET and is an
+   artefact of the recorded form submission.
 2. **Direct query** — [`tests/locust_postgres_performance.py`](../tests/locust_postgres_performance.py):
    a raw `psycopg2` `SELECT * FROM coupon_coupon` per task (wait 1–2 s),
    isolating database round-trip cost from the Django stack. As shipped this
