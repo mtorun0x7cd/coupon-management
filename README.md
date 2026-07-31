@@ -42,7 +42,7 @@ Load is generated with **Locust**, and seed scripts populate each backend with c
 
 ## Features
 
-- **User management** — registration, authentication, password change, and a per-user coupon history via Django's built-in auth system
+- **User management** — registration, authentication, a password-change screen (non-functional in the archived code — see [`SECURITY.md`](SECURITY.md)), and a per-user coupon history via Django's built-in auth system
 - **Coupon creation** — coupons with name, discount amount, expiration date, and an auto-generated coupon code derived from the name and discount
 - **Voting** — upvote/downvote with an aggregate score tracked per coupon
 - **Comments** — user comments on individual coupons, with a recomputed comment count
@@ -130,7 +130,7 @@ Two Locust scenarios under `tests/` drive load against the system:
 - [`locustfile.py`](tests/locustfile.py) — an `HttpUser` that repeatedly requests the hashtag search endpoint (`/search_coupons/`) on a running Django server, measuring end-to-end HTTP throughput and latency.
 - [`locust_postgres_performance.py`](tests/locust_postgres_performance.py) — a scenario that opens a direct `psycopg2` connection per task and issues `SELECT * FROM coupon_coupon`, isolating database round-trip cost from the Django request stack.
 
-The seed scripts under `scripts/` populate each backend with a configurable number of users and coupons (100 users by default), so both engines are exercised against comparable data volumes. Measured results depend on host hardware and database tuning and are not reproduced here; [`docs/BENCHMARK.md`](docs/BENCHMARK.md) gives the reproducible protocol and a results template to record them.
+The seed scripts under `scripts/` populate each backend with users and coupons, but the shipped defaults are not equal across the two — 100 users on PostgreSQL against 99 on MongoDB (ids 2–100, id 1 belonging to the superuser) — so volume parity has to be established deliberately. Measured results depend on host hardware and database tuning and are not reproduced here; [`docs/BENCHMARK.md`](docs/BENCHMARK.md) gives the protocol, the per-script seeding volumes, and a results template to record them.
 
 ![Use Case Diagram](assets/use_case.png)
 
@@ -180,7 +180,7 @@ coupon-management/
 
 ### Prerequisites
 
-- Python 3.10+ for the PostgreSQL variant; the MongoDB/Djongo variant runs on the older stack pinned in `requirements-mongodb.txt`
+- Python 3.10+ for the PostgreSQL variant (Locust 2.45 requires 3.10+); Python 3.9 or older for the MongoDB/Djongo variant, whose pinned Django 3.1.12 and PyMongo 3.11.4 support Python 3.6–3.9
 - PostgreSQL 14+ (for the SQL variant)
 - MongoDB 6+ or a MongoDB Atlas account (for the NoSQL variant)
 
@@ -199,7 +199,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 # MongoDB backend — Djongo pins an older Django/pymongo,
-# so install it in a separate virtual environment:
+# so install it in a separate virtual environment on Python 3.9 or older:
 pip install -r requirements-mongodb.txt
 ```
 

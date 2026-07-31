@@ -26,9 +26,16 @@ are recorded for transparency, not as a maintenance backlog:
   to any client on error, `ALLOWED_HOSTS` is empty, and `SECRET_KEY` falls back
   to a committed placeholder when `DJANGO_SECRET_KEY` is unset. None of these are
   suitable outside local development.
-- **Unauthenticated read views.** The hashtag listing and search views
-  (`coupon_by_hashtag`, `search_coupons`) are reachable without a session; the
-  remaining views are gated with Django's `@login_required`.
+- **Unauthenticated views.** The site root (`home`) and the hashtag listing and
+  search views (`coupon_by_hashtag`, `search_coupons`) are reachable without a
+  session; the remaining views are gated with Django's `@login_required`. `home`
+  is additionally a write path — it re-saves every `Coupon` row on each request,
+  so an unauthenticated client amplifies a page view into a full-table write.
+- **Broken password-change view.** `changepassword` constructs
+  `PasswordChangeForm(request.user.request.POST)`; `User` has no `request`
+  attribute, so both the GET and the POST branch raise `AttributeError` before
+  anything is rendered. The screen is linked from the profile page and has never
+  worked in this code.
 - **No transport security or rate limiting.** The project provides no TLS,
   throttling, or abuse protection; these are left to a deployment environment
   that is absent here.

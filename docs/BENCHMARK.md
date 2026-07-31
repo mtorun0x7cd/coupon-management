@@ -42,14 +42,23 @@ concurrency**.
   dominates latency and **must** be reported: a local PostgreSQL against a
   remote Atlas cluster is not a like-for-like comparison. Co-locate both engines
   or state the asymmetry explicitly.
-- **Dataset** — users and coupons seeded, set to an identical, stated volume in
-  both backends via `scripts/` (default 100 users).
+- **Dataset** — users and coupons actually seeded in each backend via `scripts/`.
+  The shipped defaults are not equal across the two (see Procedure step 1), so
+  record both volumes rather than assuming parity.
 - **Server** — Django run mode (dev server vs. gunicorn + N workers), `DEBUG=False`.
 - **Load** — Locust user count, spawn rate, and run duration.
 
 ## Procedure
 
-1. Seed both backends to the same stated volume (`scripts/*_create_*`).
+1. Seed each backend and record what the scripts actually create. PostgreSQL:
+   `postgres_create_users.py` (100 users), then
+   `postgres_create_coupons_for_users.py` (1000 coupons spread over those users).
+   MongoDB: `mongo_create_users.py` (99 users, ids 2–100, id 1 belonging to the
+   superuser), then `mongo_create_coupons.py` (1000 coupons, all attributed to
+   user id 1). Run `mongo_create_coupons_for_users.py` only alongside an
+   equivalent PostgreSQL step: it inserts 5 coupons for every document in
+   `auth_user` — 500 after the sequence above — and otherwise breaks volume
+   parity. Its inline comment claims 10 per user; the loop is `range(5)`.
 2. Start the target app with `DEBUG=False` behind a production-like server.
 3. Run each scenario headless and capture CSV:
 
@@ -91,5 +100,8 @@ intentionally blank.
 - Benchmark the search endpoint, not `home`: the `home` view re-persists every
   coupon on each request, which measures a write storm rather than read
   performance.
-- Credentials in the seed and load scripts are placeholders (`<db-password>`);
-  supply them via environment, not by editing the tracked files.
+- Credentials in the seed and load scripts are placeholders (`<db-password>` and
+  `mongodb+srv://<username>:<password>@<cluster-host>/`) read as literals. No
+  script consults the environment — only `settings.py` honours a variable, and
+  only `DJANGO_SECRET_KEY` — so a run requires a local, uncommitted edit of the
+  script constants. Do not commit that edit.
