@@ -63,10 +63,10 @@ concurrency**.
 3. Run each scenario headless and capture CSV:
 
    ```sh
-   mkdir -p results/
+   mkdir -p .tmp.nosync/results/
    locust -f tests/locustfile.py --host http://<server> \
           -u <users> -r <spawn-rate> -t <duration> \
-          --headless --csv results/<backend>_http
+          --headless --csv .tmp.nosync/results/<backend>_http
    ```
 
 4. Repeat for the direct-query scenario.
@@ -100,6 +100,10 @@ intentionally blank.
 - Benchmark the search endpoint, not `home`: the `home` view re-persists every
   coupon on each request, which measures a write storm rather than read
   performance.
+- Keep `search_query` within the form's 100-character limit. A longer value
+  makes `CouponSearchForm` invalid, and `search_coupons` then reads an unbound
+  local and returns HTTP 500, so the failure column would record that defect
+  rather than backend behaviour.
 - Credentials in the seed and load scripts are placeholders (`<db-password>` and
   `mongodb+srv://<username>:<password>@<cluster-host>/`) read as literals. No
   script consults the environment — only `settings.py` honours a variable, and

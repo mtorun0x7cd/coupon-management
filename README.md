@@ -28,14 +28,14 @@ This platform lets users create, share, and discover discount coupons within a c
 
 The technical focus is a **comparative storage-engine study**: the same Django application is run against two distinct database backends — PostgreSQL (relational, via `psycopg2`) and MongoDB (document-oriented, via Djongo). Both deployments share the same domain model, view, form, and URL layer, differing in the `settings.py` database configuration. This isolates storage-engine behaviour from application logic and makes the two engines directly comparable under identical workloads.
 
-Load is generated with **Locust**, and seed scripts populate each backend with configurable volumes of test data, so the comparison runs against reproducible datasets. This is an archived academic team deliverable, retained for reference; it is not maintained and is not suitable for production use (see [Security](#security)).
+Load is generated with **Locust**, and seed scripts populate each backend with stated volumes of synthetic test data; record content is drawn from an unseeded RNG, so two seeding runs are comparable by volume rather than byte-identical. This is an archived academic team deliverable, retained for reference; it is not maintained and is not suitable for production use (see [Security](#security)).
 
 ## Context
 
 | Dimension | Detail |
 | :--- | :--- |
 | **Institution** | TH Köln (University of Applied Sciences) |
-| **Program** | Computer Science & Engineering (Technische Informatik) |
+| **Program** | Computer Science & Engineering (Technische Informatik), M.Sc. |
 | **Course** | Large and Cloud-based Software Systems (LCSS) |
 | **Semester** | Summer 2023 |
 | **Type** | Team |
@@ -50,7 +50,11 @@ Load is generated with **Locust**, and seed scripts populate each backend with c
 - **Admin console** — Django admin registration for the `Coupon`, `Comment`, and `Hashtag` models
 - **Dual database backends** — identical application logic running on PostgreSQL and on MongoDB via Djongo
 - **Performance benchmarking** — Locust scenarios for HTTP-level and direct-query comparison of the two backends
-- **Database seeding** — scripts that populate either backend with a configurable number of users and coupons
+- **Database seeding** — scripts that populate either backend with synthetic users and coupons at the volumes fixed in the scripts
+
+The actor-level scope of the application is summarised below (PlantUML source: [`assets/use_case.puml`](assets/use_case.puml)).
+
+![Use Case Diagram](assets/use_case.png)
 
 ## Architecture
 
@@ -96,8 +100,8 @@ Both backends use the same Django model layer, shown below. On PostgreSQL it map
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#EFF6FF', 'edgeColor': '#2563EB', 'primaryBorderColor': '#2563EB', 'lineColor': '#2563EB', 'textColor': '#0F172A' }}}%%
 erDiagram
-    auth_user ||--o{ Coupon : owns
-    auth_user ||--o{ Comment : writes
+    auth_user |o--o{ Coupon : owns
+    auth_user |o--o{ Comment : writes
     Coupon ||--o{ Comment : receives
     Coupon }o--o{ Hashtag : "tagged with"
     Coupon {
@@ -131,8 +135,6 @@ Two Locust scenarios under `tests/` drive load against the system:
 - [`locust_postgres_performance.py`](tests/locust_postgres_performance.py) — a scenario that opens a direct `psycopg2` connection per task and issues `SELECT * FROM coupon_coupon`, isolating database round-trip cost from the Django request stack.
 
 The seed scripts under `scripts/` populate each backend with users and coupons, but the shipped defaults are not equal across the two — 100 users on PostgreSQL against 99 on MongoDB (ids 2–100, id 1 belonging to the superuser) — so volume parity has to be established deliberately. Measured results depend on host hardware and database tuning and are not reproduced here; [`docs/BENCHMARK.md`](docs/BENCHMARK.md) gives the protocol, the per-script seeding volumes, and a results template to record them.
-
-![Use Case Diagram](assets/use_case.png)
 
 ## Tech Stack
 
@@ -170,6 +172,8 @@ coupon-management/
 │   └── BENCHMARK.md                   # Benchmark protocol and results template
 ├── requirements.txt                   # Python dependencies — PostgreSQL variant and Locust
 ├── requirements-mongodb.txt           # Python dependencies — MongoDB/Djongo variant
+├── .github/                           # CI workflows, funding, dependabot
+├── CONTRIBUTING.md
 ├── CITATION.cff
 ├── SECURITY.md
 ├── LICENSE
@@ -182,7 +186,7 @@ coupon-management/
 
 - Python 3.10+ for the PostgreSQL variant (Locust 2.45 requires 3.10+); Python 3.9 or older for the MongoDB/Djongo variant, whose pinned Django 3.1.12 and PyMongo 3.11.4 support Python 3.6–3.9
 - PostgreSQL 14+ (for the SQL variant)
-- MongoDB 6+ or a MongoDB Atlas account (for the NoSQL variant)
+- MongoDB Atlas, or a local MongoDB, for the NoSQL variant. The deliverable was run against Atlas as pinned; note the support envelope, since Djongo 1.3.7 pins `pymongo<=3.11.4`, whose documented server support ends at MongoDB 4.4, while current Atlas clusters run 6.0 and later
 
 ### Installation
 
@@ -260,6 +264,7 @@ locust -f tests/locust_postgres_performance.py
 | Document | Description |
 | :--- | :--- |
 | [BENCHMARK.md](docs/BENCHMARK.md) | Reproducible PostgreSQL-vs-MongoDB benchmark protocol and results template |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Archive policy and the route for reporting a factual correction |
 
 ## References
 

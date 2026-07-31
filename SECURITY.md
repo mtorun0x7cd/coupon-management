@@ -36,6 +36,15 @@ are recorded for transparency, not as a maintenance backlog:
   attribute, so both the GET and the POST branch raise `AttributeError` before
   anything is rendered. The screen is linked from the profile page and has never
   worked in this code.
+- **Unhandled search input.** `search_coupons` reads `search_query` outside the
+  branch that binds it, so a query longer than the form's 100-character limit
+  raises `NameError` and returns HTTP 500 to an unauthenticated client.
+- **Third-party front-end assets.** The templates load jQuery 2.1.3 from
+  `ajax.googleapis.com`, Materialize CSS from `cdnjs.cloudflare.com`, and
+  Material Icons from `fonts.googleapis.com` at render time, none of them with a
+  subresource-integrity attribute. Every page load therefore executes
+  third-party script and reaches third-party hosts, and the UI does not render
+  offline.
 - **No transport security or rate limiting.** The project provides no TLS,
   throttling, or abuse protection; these are left to a deployment environment
   that is absent here.
