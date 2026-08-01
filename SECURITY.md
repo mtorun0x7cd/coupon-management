@@ -44,8 +44,8 @@ are recorded for transparency, not as a maintenance backlog:
   `ajax.googleapis.com`, Materialize CSS from `cdnjs.cloudflare.com`, and
   Material Icons from `fonts.googleapis.com` at render time, none of them with a
   subresource-integrity attribute. Every page load therefore executes
-  third-party script and reaches third-party hosts, and the UI does not render
-  offline.
+  third-party script and reaches third-party hosts, and the UI is not
+  reproducible offline.
 - **No transport security or rate limiting.** The project provides no TLS,
   throttling, or abuse protection; these are left to a deployment environment
   that is absent here.
