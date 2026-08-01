@@ -28,9 +28,10 @@ are recorded for transparency, not as a maintenance backlog:
   suitable outside local development.
 - **Unauthenticated views.** The site root (`home`) and the hashtag listing and
   search views (`coupon_by_hashtag`, `search_coupons`) are reachable without a
-  session; the remaining views are gated with Django's `@login_required`. `home`
-  is additionally a write path — it re-saves every `Coupon` row on each request,
-  so an unauthenticated client amplifies a page view into a full-table write.
+  session, as are `signup` and `loginUser`; every other view is gated with
+  Django's `@login_required`. `home` is additionally a write path — it re-saves
+  every `Coupon` row on each request, so an unauthenticated client amplifies a
+  page view into a full-table write.
 - **Broken password-change view.** `changepassword` constructs
   `PasswordChangeForm(request.user.request.POST)`; `User` has no `request`
   attribute, so both the GET and the POST branch raise `AttributeError` before
